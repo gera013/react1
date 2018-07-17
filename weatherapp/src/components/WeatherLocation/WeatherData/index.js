@@ -1,16 +1,18 @@
 import React from 'react';
-import { SUN } from './../../../constants/weathers';
 import './styles.css';
 //components
 import WeatherTemperature from './WeatherTemperature';
 import WeatherExtraInfo from './WeatherExtraInfo';
 
-const WeattherData = () => (
-    <div className='weatherDataCont'>
-        <WeatherTemperature temperature={20} weatherState={SUN}/>
-        <WeatherExtraInfo humidity={40} wind={'10m/s'}/>
-    </div>
-);
+const WeattherData = ({ data }) => {
+    const { temperature, weatherState, humidity, wind} = data;
+    return (
+        <div className='weatherDataCont'>
+            <WeatherTemperature temperature={temperature} weatherState={weatherState}/>
+            <WeatherExtraInfo humidity={humidity} wind={wind}/>
+        </div>
+    );
+};
 
 /*
 class WeatherData extends Component{
