@@ -1,51 +1,53 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import './styles.css';
-import { SUN, WINDY } from './../../constants/weathers';
+import transformWeather from './../../services/transformWeather';
+
+
 //Componentes
 import Location from './Location';
 import WeatherData from './WeatherData'
+import { CircularProgress } from 'material-ui';
 
-const data1 = {
-    temperature: 20,
-    weatherState: SUN,
-    humidity: 10,
-    wind: '10 m/s',
 
-};
+const url = "http://api.openweathermap.org/data/2.5/weather";
+const api_key = "f15d144a05f91d476517eb4efca3a368";
 
-const data2 = {
-    temperature: 18,
-    weatherState: WINDY,
-    humidity: 5,
-    wind: '19 m/s',
 
-};
 
 class WeatherLocation extends Component {
 
-    constructor(){
+    constructor({city}){
         super();
         this.state = {
-            city: 'Buenos Aires',
-            data: data1
+            city,
+            data: null
         };
     }
+   
 
     handleUpdateClick = () =>{
-        this.setState({
-            city: 'Buenos Aires',
-            data: data2
+        const { city } = this.state;
+        const api_weather = `${url}?q=${city}&appid=${api_key}`;
+        fetch(api_weather).then( data => {
+            return data.json();
+        }).then( weather_data => {
+            const data = transformWeather(weather_data);
+            this.setState({data});
         });
     }
-
+    componentWillMount(){
+        this.handleUpdateClick();
+    }
     render(){
+        const { onWeatherLocationClick } = this.props
         const { city, data } = this.state;
         return(
-            <div className='weatherLocationCont'>
+            <div className='weatherLocationCont' onClick={onWeatherLocationClick}>
                 <Location city={city}/>
-                <WeatherData data= { data }/>
-                <button onClick={this.handleUpdateClick}>Actualizar</button>
+                {data ? <WeatherData data= { data }/> : 
+                <CircularProgress size={60} thickness={7} />}
+    
             </div>
         );
     }
@@ -58,6 +60,10 @@ WeatherData.propTypes = {
         humidity: PropTypes.number.isRequired,
         wind: PropTypes.string.isRequired,
     }),
+}
+WeatherLocation.propTypes = {
+    city:PropTypes.string,
+    onWeatherLocationClick: PropTypes.func,
 }
 
 export default WeatherLocation; 

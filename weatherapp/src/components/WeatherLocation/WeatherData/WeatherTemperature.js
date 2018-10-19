@@ -5,7 +5,9 @@ import { CLOUD,
     SUN, 
     RAIN, 
     SNOW, 
-    WINDY } from './../../../constants/weathers';
+    WINDY,
+    THUNDER,
+    DRIZZLE } from './../../../constants/weathers';
 import './styles.css';
 
 const stateToIconName = weatherState => {
@@ -22,6 +24,10 @@ const stateToIconName = weatherState => {
             return "far fa-snowflake";
         case WINDY:
             return "fas fa-umbrella-beach";
+        case THUNDER:
+            return "fas fa-bolt";
+        case DRIZZLE:
+            return "fas fa-tint";
         default:
             return "fas fa-sun";  
     }

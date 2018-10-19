@@ -22,7 +22,47 @@
   font-size: large;
 }
 
+.green {
+  background: green;
+  height:100px;
+  min-width:50px;
+}
+
+.blue {
+  background: blue;
+  height:100px;
+  min-width:50px;
+}
+
+.red {
+  background: red;
+  height:100px;
+  min-width:50px;
+}
+
+.yelow {
+  background: yellow;
+  height:100px;
+  min-width:50px;
+}
+
 @keyframes App-logo-spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
+}
+
+.detail {
+  background: #999;
+  height: 85vh;
+  width: calc(100% - 40px);
+  overflow:auto;
+  padding: 0px 20px;
+}
+
+
+@media (max-width: 767px){
+  .detail {
+    height: 40vh;
+  }
+  
 }
